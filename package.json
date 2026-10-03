@@ -1,0 +1,9 @@
+{
+  "name": "asibitin-hakori",
+  "version": "1.0.0",
+  "description": "Dental clinic discovery platform",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}
