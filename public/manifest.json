@@ -1,0 +1,33 @@
+{
+  "name": "Asibitin Hakori — Find a Dental Clinic",
+  "short_name": "Asibitin Hakori",
+  "description": "Find dental clinics across Nigeria. Call, WhatsApp, or get directions.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5fafb",
+  "theme_color": "#087f83",
+  "lang": "en",
+  "categories": ["health", "medical"],
+  "icons": [
+    {
+      "src": "https://ui-avatars.com/api/?name=AH&size=192&background=087f83&color=fff&bold=true&font-size=0.5&length=2",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://ui-avatars.com/api/?name=AH&size=512&background=087f83&color=fff&bold=true&font-size=0.5&length=2",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://ui-avatars.com/api/?name=AH&size=512&background=087f83&color=fff&bold=true&font-size=0.5&length=2",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
