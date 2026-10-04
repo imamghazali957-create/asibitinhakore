@@ -6,6 +6,12 @@
 <title>ASIBITIN HAKORI | Find Dental Clinics in Nigeria</title>
 <meta name="description" content="Find dental clinics across Nigeria, discover dental services, contact clinics by phone or WhatsApp, get directions and request dental appointments.">
 <meta name="theme-color" content="#0d7f83">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="https://ui-avatars.com/api/?name=AH&size=192&background=087f83&color=fff&bold=true&font-size=0.5&length=2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Asibitin Hakori">
+<meta name="mobile-web-app-capable" content="yes">
 <meta property="og:title" content="ASIBITIN HAKORI | Find Dental Clinics in Nigeria">
 <meta property="og:description" content="Discover dental clinics, contact clinics directly and request appointments.">
 <meta property="og:type" content="website">
@@ -214,6 +220,7 @@ footer{background:#082a34;color:#d5ecef;margin-top:50px}.footer-grid{display:gri
     <div class="nav-actions">
       <button class="lang-btn" id="langToggle" type="button" aria-label="Switch language">HA</button>
       <a class="primary-btn small-btn" href="#appointment" data-i18n="book">BOOK APPOINTMENT</a>
+      <button class="lang-btn" id="installAppBtn" type="button" style="display:none" aria-label="Install app">📲 Install</button>
       <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">☰</button>
     </div>
   </div>
@@ -970,7 +977,30 @@ window.addEventListener("hashchange",handleHash);
 
 /* ---------- Boot ---------- */
 setMinDate();setupNav();setupFilters();setupAppointment();setupRegistration();applyLanguage(currentLang);renderAll();observeReveals();handleHash();
-
+let _deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredInstallPrompt = e;
+  const btn = document.getElementById('installAppBtn');
+  if (btn) btn.style.display = 'inline-flex';
+});
+const _installBtn = document.getElementById('installAppBtn');
+if (_installBtn) {
+  _installBtn.addEventListener('click', async () => {
+    if (!_deferredInstallPrompt) {
+      alert('To install: tap your browser menu (⋮) and choose "Add to Home Screen" or "Install App".');
+      return;
+    }
+    _deferredInstallPrompt.prompt();
+    const { outcome } = await _deferredInstallPrompt.userChoice;
+    _deferredInstallPrompt = null;
+    _installBtn.style.display = 'none';
+  });
+}
+window.addEventListener('appinstalled', () => {
+  const btn = document.getElementById('installAppBtn');
+  if (btn) btn.style.display = 'none';
+});
 // Load backend clinics in the background, then re-render
 loadBackend().then(ok => {
   if(ok){
@@ -993,6 +1023,15 @@ loadBackend().then(ok => {
  "alternateName":"Asibitin Hakori | Imamgee Dental Care",
  "description":"Dental clinic discovery and appointment request platform for Nigeria.",
  "inLanguage":["en","ha"]
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').catch(err => {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
 }
 </script>
 </body>
