@@ -461,9 +461,17 @@ let currentLang=localStorage.getItem(STORAGE.lang)||"en";
 /* ============================================================
    BACKEND LAYER — Supabase via Netlify Functions
    ============================================================ */
-const API = {
-  clinics:      '/api/clinics',
-  appointments: '/api/appointments'
+const API = { clinics: '/api/clinics', appointments: '/api/appointments', track: '/api/track' };
+
+function trackEvent(clinicId, eventType){
+  if(!clinicId || !eventType) return;
+  // Fire-and-forget — don't block the UI
+  fetch(API.track, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ clinicId, eventType })
+  }).catch(() => {});
+}
 };
 let _remoteClinics = null;
 let _backendReady = false;
