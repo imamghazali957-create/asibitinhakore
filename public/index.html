@@ -156,8 +156,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .owner-list{display:grid;gap:10px}.owner-item{border:1px solid var(--line);border-radius:15px;padding:14px;background:#fff}.owner-item h4{margin:0 0 5px}
 .legal-grid{display:grid;gap:12px}.legal-card{padding:18px;background:#fff;border:1px solid var(--line);border-radius:18px}.legal-card h3{margin-top:0}
 footer{background:#082a34;color:#d5ecef;margin-top:50px}.footer-grid{display:grid;gap:24px;padding:40px 0}.footer-brand strong{color:#fff}.footer-links{display:grid;grid-template-columns:1fr 1fr;gap:8px}.footer-links a{color:#b9d3d8;text-decoration:none;font-size:.82rem}.footer-links a:hover{text-decoration:underline}.copyright{border-top:1px solid rgba(255,255,255,.12);padding:18px 0;font-size:.78rem;color:#a8c3c8}
-.toast{position:fixed;right:14px;bottom:85px;z-index:500;max-width:min(380px,calc(100% - 28px));background:#10212b;color:#fff;padding:13px 15px;border-radius:14px;box-shadow:0 15px 35px rgba(0,0,0,.2);display:none}
-.toast.show{display:block;animation:toastIn .2s ease}@keyframes toastIn{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+.toast{position:fixed;left:50%;transform:translateX(-50%) translateY(40px);bottom:100px;z-index:9999;max-width:min(420px,calc(100% - 28px));background:#0b6e8f;color:#fff;padding:16px 22px;border-radius:14px;box-shadow:0 15px 40px rgba(0,0,0,.35);display:none;font-weight:700;font-size:.95rem;text-align:center;border:1px solid rgba(255,255,255,.15)}
+.toast.show{display:block;animation:toastIn .3s ease}@keyframes toastIn{from{transform:translateX(-50%) translateY(60px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
 .mobile-actions{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-bottom));gap:7px}
 .mobile-actions a,.mobile-actions button{min-height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:850;font-size:.78rem;text-decoration:none;display:grid;place-items:center}
 .mobile-actions .book{background:var(--primary);color:#fff;border-color:var(--primary)}
@@ -465,14 +465,13 @@ const API = { clinics: '/api/clinics', appointments: '/api/appointments', track:
 
 function trackEvent(clinicId, eventType){
   if(!clinicId || !eventType) return;
-  // Fire-and-forget — don't block the UI
   fetch(API.track, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ clinicId, eventType })
   }).catch(() => {});
 }
-};
+
 let _remoteClinics = null;
 let _backendReady = false;
 
@@ -554,19 +553,19 @@ const DEFAULT_CLINICS = [
  {id:"imdc-kano",name:"Imam Dental Clinic",ownerName:"",phone:"07038382223",whatsapp:"07038382223",email:"",
   state:"Kano State",city:"Kano",address:"Hotoro Danmarke Bus Stop, beside Lotus Bank",hours:{type:"24h",text:"Monday–Sunday · 24 hours"},
   services:[],emergency:false,verified:false,status:"pending",image:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1000&q=78",mapsUrl:"",
-  description:"Clinic listing supplied to Asibitin Hakori. Services and verification status should be confirmed directly with the clinic.",createdAt:"2026-10-03T00:00:00Z"},
+  description:"Clinic listing supplied to Asibitin Hakori.",createdAt:"2026-10-03T00:00:00Z"},
  {id:"bdc-kano",name:"Balan Dental Clinic",ownerName:"",phone:"+234 803 280 1092",whatsapp:"+234 803 280 1092",email:"",
   state:"Kano State",city:"Kano",address:"Dorayi Karshen Waya, Kuntau Layin Alfindiqi",hours:{type:"partial",open:"09:00",close:null,text:"9:00 AM — open late"},
   services:[],emergency:false,verified:false,status:"pending",image:"https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1000&q=78",mapsUrl:"",
-  description:"Clinic listing supplied to Asibitin Hakori. Closing time, services and verification status should be confirmed directly with the clinic.",createdAt:"2026-10-03T00:00:00Z"},
+  description:"Clinic listing supplied to Asibitin Hakori.",createdAt:"2026-10-03T00:00:00Z"},
  {id:"mdc-katsina",name:"Madina Dental Clinic",ownerName:"",phone:"0816 389 0061",whatsapp:"0816 389 0061",email:"",
   state:"Katsina State",city:"Katsina",address:"Beside Daular Kaji, Kwado, Katsina",hours:{type:"partial",open:"08:00",close:null,text:"8:00 AM — late"},
   services:[],emergency:false,verified:false,status:"pending",image:"https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1000&q=78",mapsUrl:"https://share.google/5eIG4oHUvm02xrul2",
-  description:"Clinic listing supplied to Asibitin Hakori. Closing time, services and verification status should be confirmed directly with the clinic.",createdAt:"2026-10-03T00:00:00Z"},
+  description:"Clinic listing supplied to Asibitin Hakori.",createdAt:"2026-10-03T00:00:00Z"},
  {id:"kdc-abuja",name:"Kowa Dental Care",ownerName:"",phone:"0706 671 8167",whatsapp:"0706 671 8167",email:"",
   state:"FCT Abuja",city:"Abuja",address:"Access Hospital by Police Signboard, Gwagwa, along Dei-Dei–Karmo Way",hours:{type:"24h",text:"Monday–Sunday · 24 hours"},
   services:[],emergency:false,verified:false,status:"pending",image:"https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1000&q=78",mapsUrl:"https://maps.app.goo.gl/YdpbyCd84wBo9VxS8",
-  description:"Clinic listing supplied to Asibitin Hakori. Services and verification status should be confirmed directly with the clinic.",createdAt:"2026-10-03T00:00:00Z"}
+  description:"Clinic listing supplied to Asibitin Hakori.",createdAt:"2026-10-03T00:00:00Z"}
 ];
 
 const SERVICES = [
@@ -614,9 +613,6 @@ function getClinics(){
  const raw=localStorage.getItem(STORAGE.clinics);
  if(!raw){localStorage.setItem(STORAGE.clinics,JSON.stringify(DEFAULT_CLINICS));return structuredClone(DEFAULT_CLINICS)}
  const clinics=safeParse(raw,[]);
- let changed=false;
- clinics.forEach(c=>{if(["imdc-kano","bdc-kano","mdc-katsina","kdc-abuja"].includes(c.id) && !c.adminVerifiedAt){if(c.status!=="pending"||c.verified){c.status="pending";c.verified=false;changed=true;}}});
- if(changed)saveClinics(clinics);
  return clinics;
 }
 function saveClinics(clinics){localStorage.setItem(STORAGE.clinics,JSON.stringify(clinics));}
@@ -718,9 +714,7 @@ function statusBadge(c){
  if(c.status==="suspended")return `<span class="badge suspended">${escapeHtml(t("suspended"))}</span>`;
  return `<span class="badge neutral">${currentLang==="ha"?"Ba a tabbatar ba":"Unverified"}</span>`;
 }
-function openBadge(c){
- return c.hours?.type==="24h" ? `<span class="badge open">${escapeHtml(t("openNow"))}</span>` : "";
-}
+function openBadge(c){ return c.hours?.type==="24h" ? `<span class="badge open">${escapeHtml(t("openNow"))}</span>` : ""; }
 function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function getQuery(){return $("clinicSearch").value.trim().toLowerCase()}
 function filterClinics(){
@@ -762,9 +756,9 @@ function clinicCard(c){
     <div class="service-tags">${services.length?services.map(s=>`<span class="service-tag">${escapeHtml(s)}</span>`).join(""):`<span class="service-tag">${escapeHtml(t("servicesMissing"))}</span>`}</div>
     <div class="card-actions">
       <button class="primary-btn small-btn wide" type="button" data-view="${escapeHtml(c.id)}">${escapeHtml(t("viewClinic"))}</button>
-      <a class="secondary-btn small-btn" href="${escapeHtml(waLink(c.whatsapp, clinicWhatsAppMessage(c)))}" target="_blank" rel="noopener">💬 ${escapeHtml(t("whatsapp"))}</a>
-      <a class="ghost-btn small-btn" href="${escapeHtml(mapsLink(c))}" target="_blank" rel="noopener">📍 ${escapeHtml(t("directions"))}</a>
-      <a class="ghost-btn small-btn" href="${escapeHtml(callLink(c.phone))}">📞 ${escapeHtml(t("call"))}</a>
+      <a class="secondary-btn small-btn" href="${escapeHtml(waLink(c.whatsapp, clinicWhatsAppMessage(c)))}" target="_blank" rel="noopener" data-track="${escapeHtml(c.id)}" data-track-type="whatsapp">💬 ${escapeHtml(t("whatsapp"))}</a>
+      <a class="ghost-btn small-btn" href="${escapeHtml(mapsLink(c))}" target="_blank" rel="noopener" data-track="${escapeHtml(c.id)}" data-track-type="directions">📍 ${escapeHtml(t("directions"))}</a>
+      <a class="ghost-btn small-btn" href="${escapeHtml(callLink(c.phone))}" data-track="${escapeHtml(c.id)}" data-track-type="call">📞 ${escapeHtml(t("call"))}</a>
     </div>
     <button class="report-link" type="button" data-report="${escapeHtml(c.id)}">${escapeHtml(t("report"))}</button>
    </div>
@@ -781,6 +775,11 @@ function renderClinics(){
 function bindClinicButtons(){
  document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>openClinicProfile(b.dataset.view)));
  document.querySelectorAll("[data-report]").forEach(b=>b.addEventListener("click",()=>reportClinic(b.dataset.report)));
+ document.querySelectorAll("[data-track]").forEach(el=>{
+   el.addEventListener("click", ()=>{
+     trackEvent(el.dataset.track, el.dataset.trackType);
+   });
+ });
  const e=$("emptyClear");if(e)e.addEventListener("click",clearFilters);
 }
 function reportClinic(id){
@@ -808,16 +807,21 @@ function openClinicProfile(id){
  </div>
  <div class="profile-actions">
    <button class="primary-btn wide" type="button" id="profileBook">📅 Book Appointment</button>
-   <a class="secondary-btn" href="${escapeHtml(waLink(c.whatsapp,clinicWhatsAppMessage(c)))}" target="_blank" rel="noopener">💬 WhatsApp</a>
-   <a class="ghost-btn" href="${escapeHtml(callLink(c.phone))}">📞 Call</a>
-   <a class="ghost-btn wide" href="${escapeHtml(mapsLink(c))}" target="_blank" rel="noopener">📍 Get Directions</a>
+   <a class="secondary-btn" href="${escapeHtml(waLink(c.whatsapp,clinicWhatsAppMessage(c)))}" target="_blank" rel="noopener" data-track="${escapeHtml(c.id)}" data-track-type="whatsapp">💬 WhatsApp</a>
+   <a class="ghost-btn" href="${escapeHtml(callLink(c.phone))}" data-track="${escapeHtml(c.id)}" data-track-type="call">📞 Call</a>
+   <a class="ghost-btn wide" href="${escapeHtml(mapsLink(c))}" target="_blank" rel="noopener" data-track="${escapeHtml(c.id)}" data-track-type="directions">📍 Get Directions</a>
  </div>`;
  $("profileBook").addEventListener("click",()=>{closeModal();$("appointmentClinic").value=c.id;$("appointment").scrollIntoView({behavior:"smooth"});});
  openModal();
+ document.querySelectorAll("#modalBody [data-track]").forEach(el=>{
+   el.addEventListener("click", ()=>{
+     trackEvent(el.dataset.track, el.dataset.trackType);
+   });
+ });
 }
 function openModal(){ $("modalBackdrop").classList.add("open"); document.body.classList.add("modal-open"); setTimeout(()=>$("modalClose").focus(),0)}
 function closeModal(){ $("modalBackdrop").classList.remove("open");document.body.classList.remove("modal-open")}
-function showToast(msg){const el=$("toast");el.textContent=msg;el.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>el.classList.remove("show"),4200)}
+function showToast(msg){const el=$("toast");el.textContent=msg;el.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>el.classList.remove("show"),5000)}
 function clearFilters(){
  $("clinicSearch").value="";$("heroSearch").value="";$("stateFilter").value="";$("cityFilter").value="";$("openFilter").value="";$("twentyFourFilter").checked=false;$("emergencyFilter").checked=false;$("verifiedFilter").checked=false;renderClinics();
 }
@@ -845,21 +849,34 @@ function validateRequired(form){
 }
 function setupAppointment(){
  $("appointmentForm").addEventListener("submit",async e=>{
-   e.preventDefault();if(!validateRequired(e.currentTarget)){showToast(currentLang==="ha"?"Da fatan ka cika wuraren da ake buƙata.":"Please complete the required fields.");return}
+   e.preventDefault();
+   const form = e.currentTarget;
+   if(!validateRequired(form)){showToast(currentLang==="ha"?"Da fatan ka cika wuraren da ake buƙata.":"Please complete the required fields.");return}
    const clinic=getClinics().find(c=>c.id===$("appointmentClinic").value);if(!clinic){showToast(currentLang==="ha"?"Da fatan ka zaɓi asibiti.":"Please select a clinic.");return}
    const data={patientName:$("patientName").value.trim(),phone:$("patientPhone").value.trim(),email:$("patientEmail").value.trim(),age:$("patientAge").value.trim(),clinicId:clinic.id,date:$("appointmentDate").value,time:$("appointmentTime").value,reason:$("appointmentReason").value,message:$("appointmentMessage").value.trim()};
+   trackEvent(clinic.id, 'booking');
    const saved=await createAppointment(data),msg=appointmentMessage(saved,clinic),link=waLink(clinic.whatsapp,msg);
    $("modalTitle").textContent="Appointment Request Created";
    $("modalBody").innerHTML=`<div class="about-panel"><div class="badges"><span class="badge pending">⏳ Pending Request</span></div><h2>Review your appointment</h2><p>Your request has been stored and sent to the platform. Nothing has been sent to the clinic automatically.</p><div class="detail-line">👤 <b>${escapeHtml(data.patientName)}</b></div><div class="detail-line">🏥 <span>${escapeHtml(clinic.name)}</span></div><div class="detail-line">📅 <span>${escapeHtml(formatDate(data.date))} at ${escapeHtml(data.time)}</span></div><div class="detail-line">🦷 <span>${escapeHtml(data.reason)}</span></div><div class="form-actions"><a class="primary-btn" href="${link}" target="_blank" rel="noopener">💬 SEND APPOINTMENT VIA WHATSAPP</a><button class="ghost-btn" type="button" id="closeAfterSave">Close</button></div><p class="state">WhatsApp opens with a pre-filled message. You decide whether to send it.</p></div>`;
-   openModal();$("closeAfterSave").addEventListener("click",closeModal);showToast(currentLang==="ha"?"An aika bukatar alƙawari.":"Appointment request sent to platform.");
+   openModal();$("closeAfterSave").addEventListener("click",closeModal);showToast(currentLang==="ha"?"An aika bukatar alƙawari.":"✅ Appointment request sent successfully.");
  });
 }
 function setupRegistration(){
  $("clinicRegistrationForm").addEventListener("submit",async e=>{
-  e.preventDefault();if(!validateRequired(e.currentTarget)){showToast(currentLang==="ha"?"Da fatan ka cika wuraren da ake buƙata.":"Please complete the required fields.");return}
+  e.preventDefault();
+  const form = e.currentTarget;
+  if(!validateRequired(form)){showToast(currentLang==="ha"?"Da fatan ka cika wuraren da ake buƙata.":"Please complete the required fields.");return}
   const services=$("regServices").value.split(",").map(s=>s.trim()).filter(Boolean);
   const clinic={id:"clinic-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),name:$("regName").value.trim(),ownerName:$("regOwner").value.trim(),phone:$("regPhone").value.trim(),whatsapp:$("regWhatsApp").value.trim(),email:$("regEmail").value.trim(),state:$("regState").value.trim(),city:$("regCity").value.trim(),address:$("regAddress").value.trim(),hours:{type:"text",text:$("regHours").value.trim()},services,emergency:$("regEmergency").value==="true",verified:false,status:"pending",image:$("regImage").value.trim(),mapsUrl:$("regMaps").value.trim(),description:$("regDescription").value.trim(),createdAt:new Date().toISOString()};
-  await addClinic(clinic);e.currentTarget.reset();renderAll();showToast(currentLang==="ha"?"An tura rajistar asibitin cikin nasara, kuma tana jiran tabbatarwa.":"Your clinic has been submitted successfully and is awaiting verification.");$("clinics").scrollIntoView({behavior:"smooth"});
+  try{
+    await addClinic(clinic);
+    form.reset();
+    renderAll();
+    showToast(currentLang==="ha"?"✅ An tura rajistar asibitin cikin nasara, kuma tana jiran tabbatarwa.":"✅ Your clinic has been submitted successfully and is awaiting verification.");
+    $("clinics").scrollIntoView({behavior:"smooth"});
+  }catch(err){
+    showToast(currentLang==="ha"?"An sami matsala. Sake gwadawa.":"Something went wrong. Please try again.");
+  }
  });
 }
 function renderAll(){renderStats();renderStates();populateAppointmentClinics();renderClinics();renderServices()}
@@ -911,14 +928,14 @@ async function verifyAdminPasscode(value){return (await sha256Hex(value))===ADMI
 function adminLogin(){
  $("modal").classList.remove("large");
  $("modalTitle").textContent="Admin Access";
- $("modalBody").innerHTML=`<div class="admin-login"><p class="admin-warning"><strong>Prototype security notice:</strong> this is not real server-side authentication. Client-side code can be inspected or modified, so production access control must be enforced on a server.</p><form id="adminLoginForm"><div class="field"><label for="adminPass">Admin passcode</label><input id="adminPass" type="password" autocomplete="off" required><div class="error">Enter the admin passcode.</div></div><div class="form-actions"><button class="primary-btn" type="submit">ACCESS ADMIN DASHBOARD</button></div></form></div>`;
+ $("modalBody").innerHTML=`<div class="admin-login"><p class="admin-warning"><strong>Prototype security notice:</strong> this is not real server-side authentication.</p><form id="adminLoginForm"><div class="field"><label for="adminPass">Admin passcode</label><input id="adminPass" type="password" autocomplete="off" required><div class="error">Enter the admin passcode.</div></div><div class="form-actions"><button class="primary-btn" type="submit">ACCESS ADMIN DASHBOARD</button></div></form></div>`;
  openModal();$("adminLoginForm").addEventListener("submit",async e=>{e.preventDefault();const button=e.currentTarget.querySelector("button[type=submit]");if(button)button.disabled=true;try{if(!(await verifyAdminPasscode($("adminPass").value))){showToast(t("incorrectPass"));$("adminPass").select();return}setAdminAuthenticated(true);location.hash="admin";closeModal();renderAdminDashboard();}catch(err){showToast("Admin login is unavailable in this browser.");}finally{if(button)button.disabled=false;}});
 }
 function renderAdminDashboard(){
  if(!isAdminAuthenticated()){adminLogin();return;}
  $("modalTitle").textContent="ASIBITIN HAKORI — Admin Dashboard";
  $("modal").classList.add("large");
- $("modalBody").innerHTML=`<div class="tabs"><button class="tab active" data-admin-tab="overview">Overview</button><button class="tab" data-admin-tab="clinics">Clinics</button><button class="tab" data-admin-tab="appointments">Appointments</button><button class="tab" data-admin-tab="owner">Owner Management</button><button class="tab" data-admin-logout="1">Log out</button></div><div id="adminContent"></div>`;
+ $("modalBody").innerHTML=`<div class="tabs"><button class="tab active" data-admin-tab="overview">Overview</button><button class="tab" data-admin-tab="analytics">📊 Analytics</button><button class="tab" data-admin-tab="clinics">Clinics</button><button class="tab" data-admin-tab="appointments">Appointments</button><button class="tab" data-admin-tab="owner">Owner Management</button><button class="tab" data-admin-logout="1">Log out</button></div><div id="adminContent"></div>`;
  document.querySelectorAll("[data-admin-tab]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-admin-tab]").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderAdminTab(b.dataset.adminTab)}));
  const logout=$(`[data-admin-logout]`); if(logout)logout.addEventListener("click",logoutAdmin);
  renderAdminTab("overview");openModal();
@@ -928,8 +945,56 @@ function renderAdminTab(tab){
  const box=$("adminContent");if(!box)return;
  const cs=getClinics(),aps=getAppointments();
  if(tab==="overview"){
-  box.innerHTML=`<div class="admin-grid"><div class="admin-stat"><span>Total Clinics</span><strong>${cs.length}</strong></div><div class="admin-stat"><span>Verified Clinics</span><strong>${cs.filter(c=>c.status==="verified"||c.verified).length}</strong></div><div class="admin-stat"><span>Pending Clinics</span><strong>${cs.filter(c=>c.status==="pending").length}</strong></div><div class="admin-stat"><span>Appointments</span><strong>${aps.length}</strong></div></div><div class="about-panel" style="margin-top:14px"><h3>Prototype controls</h3><p>Admin can approve, reject, suspend, edit or delete clinics and update appointment status.</p><p class="admin-warning">THIS IS A PROTOTYPE ADMIN SYSTEM. A REAL DEPLOYMENT REQUIRES SERVER-SIDE AUTHENTICATION AND DATABASE SECURITY.</p></div>`;
- } else if(tab==="clinics"){renderAdminClinics(box)} else if(tab==="appointments"){renderAdminAppointments(box)} else renderOwnerManagement(box);
+  box.innerHTML=`<div class="admin-grid"><div class="admin-stat"><span>Total Clinics</span><strong>${cs.length}</strong></div><div class="admin-stat"><span>Verified Clinics</span><strong>${cs.filter(c=>c.status==="verified"||c.verified).length}</strong></div><div class="admin-stat"><span>Pending Clinics</span><strong>${cs.filter(c=>c.status==="pending").length}</strong></div><div class="admin-stat"><span>Appointments</span><strong>${aps.length}</strong></div></div><div class="about-panel" style="margin-top:14px"><h3>Prototype controls</h3><p>Admin can approve, reject, suspend, edit or delete clinics and update appointment status.</p><p class="admin-warning">THIS IS A PROTOTYPE ADMIN SYSTEM.</p></div>`;
+ } else if(tab==="analytics"){renderAdminAnalytics(box)} else if(tab==="clinics"){renderAdminClinics(box)} else if(tab==="appointments"){renderAdminAppointments(box)} else renderOwnerManagement(box);
+}
+async function renderAdminAnalytics(box){
+  box.innerHTML = '<div class="empty">Loading analytics…</div>';
+  try {
+    const res = await fetch('/api/track', { headers: { 'x-admin-key': ADMIN_API_KEY } });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Failed to load');
+
+    const counts = data.counts || {};
+    const clinics = getClinics();
+
+    let totalWA = 0, totalCall = 0, totalDir = 0, totalBooking = 0;
+    Object.values(counts).forEach(c => {
+      totalWA += c.whatsapp || 0;
+      totalCall += c.call || 0;
+      totalDir += c.directions || 0;
+      totalBooking += c.booking || 0;
+    });
+
+    let html = '<div class="admin-grid">' +
+      '<div class="admin-stat"><span>💬 WhatsApp Clicks</span><strong>' + totalWA + '</strong></div>' +
+      '<div class="admin-stat"><span>📞 Call Clicks</span><strong>' + totalCall + '</strong></div>' +
+      '<div class="admin-stat"><span>📍 Directions</span><strong>' + totalDir + '</strong></div>' +
+      '<div class="admin-stat"><span>📅 Bookings</span><strong>' + totalBooking + '</strong></div>' +
+      '</div>';
+
+    html += '<h3 style="margin-top:20px">Per-clinic breakdown</h3>';
+    html += '<div class="table-wrap"><table class="admin-table">';
+    html += '<thead><tr><th>Clinic</th><th>💬 WA</th><th>📞 Call</th><th>📍 Dir</th><th>📅 Book</th></tr></thead><tbody>';
+
+    clinics.forEach(c => {
+      const row = counts[c.id] || { whatsapp:0, call:0, directions:0, booking:0 };
+      html += '<tr>' +
+        '<td><strong>' + escapeHtml(c.name) + '</strong></td>' +
+        '<td>' + (row.whatsapp||0) + '</td>' +
+        '<td>' + (row.call||0) + '</td>' +
+        '<td>' + (row.directions||0) + '</td>' +
+        '<td>' + (row.booking||0) + '</td>' +
+        '</tr>';
+    });
+
+    html += '</tbody></table></div>';
+    html += '<p class="state" style="margin-top:12px">Only events since this feature was added are counted.</p>';
+
+    box.innerHTML = html;
+  } catch (err) {
+    box.innerHTML = '<div class="empty">Could not load analytics: ' + escapeHtml(err.message) + '</div>';
+  }
 }
 function renderAdminClinics(box){
  const cs=getClinics();
@@ -949,7 +1014,7 @@ function adminEditClinic(id){
  <div class="field"><label>Phone</label><input id="ePhone" value="${escapeHtml(c.phone)}"></div><div class="field"><label>WhatsApp</label><input id="eWa" value="${escapeHtml(c.whatsapp)}"></div>
  <div class="field"><label>State</label><input id="eState" value="${escapeHtml(c.state)}"></div><div class="field"><label>City / Area</label><input id="eCity" value="${escapeHtml(c.city)}"></div>
  <div class="field" style="grid-column:1/-1"><label>Address</label><input id="eAddress" value="${escapeHtml(c.address)}"></div>
- <div class="field"><label>Hours text</label><input id="eHours" value="${escapeHtml(c.hours?.text||"")}"></div><div class="field"><label>24-hour clinic?</label><select id="e24h"><option value="false" ${c.hours?.type==="24h"?"":"selected"}>No / hours not 24h</option><option value="true" ${c.hours?.type==="24h"?"selected":""}>Yes — confirmed 24 hours</option></select></div><div class="field"><label>Status</label><select id="eStatus">${["pending","verified","rejected","suspended"].map(s=>`<option ${c.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
+ <div class="field"><label>Hours text</label><input id="eHours" value="${escapeHtml(c.hours?.text||"")}"></div><div class="field"><label>24-hour clinic?</label><select id="e24h"><option value="false" ${c.hours?.type==="24h"?"":"selected"}>No</option><option value="true" ${c.hours?.type==="24h"?"selected":""}>Yes</option></select></div><div class="field"><label>Status</label><select id="eStatus">${["pending","verified","rejected","suspended"].map(s=>`<option ${c.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
  <div class="field"><label>Services (comma-separated)</label><input id="eServices" value="${escapeHtml((c.services||[]).join(", "))}"></div><div class="field"><label>Emergency care</label><select id="eEmergency"><option value="false" ${!c.emergency?"selected":""}>No</option><option value="true" ${c.emergency?"selected":""}>Yes</option></select></div>
  <div class="field" style="grid-column:1/-1"><label>Image URL</label><input id="eImage" value="${escapeHtml(c.image||"")}"></div><div class="field" style="grid-column:1/-1"><label>Maps URL</label><input id="eMaps" value="${escapeHtml(c.mapsUrl||"")}"></div>
  <div class="field" style="grid-column:1/-1"><label>Description</label><textarea id="eDesc">${escapeHtml(c.description||"")}</textarea></div>
@@ -983,8 +1048,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("modalBackdrop").
 $("contactLink").addEventListener("click",e=>{e.preventDefault();showToast("Use the clinic phone/WhatsApp buttons on each clinic profile for direct contact.")});
 window.addEventListener("hashchange",handleHash);
 
-/* ---------- Boot ---------- */
-setMinDate();setupNav();setupFilters();setupAppointment();setupRegistration();applyLanguage(currentLang);renderAll();observeReveals();handleHash();
+/* ---------- PWA Install Button ---------- */
 let _deferredInstallPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
@@ -1009,7 +1073,19 @@ window.addEventListener('appinstalled', () => {
   const btn = document.getElementById('installAppBtn');
   if (btn) btn.style.display = 'none';
 });
-// Load backend clinics in the background, then re-render
+
+/* ---------- Service Worker ---------- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').catch(err => {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
+
+/* ---------- Boot ---------- */
+setMinDate();setupNav();setupFilters();setupAppointment();setupRegistration();applyLanguage(currentLang);renderAll();observeReveals();handleHash();
+
 loadBackend().then(ok => {
   if(ok){
     console.log('✅ Backend connected');
@@ -1031,15 +1107,6 @@ loadBackend().then(ok => {
  "alternateName":"Asibitin Hakori | Imamgee Dental Care",
  "description":"Dental clinic discovery and appointment request platform for Nigeria.",
  "inLanguage":["en","ha"]
-}
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').catch(err => {
-      console.warn('Service worker registration failed:', err);
-    });
-  });
 }
 </script>
 </body>
