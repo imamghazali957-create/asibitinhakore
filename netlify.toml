@@ -1,4 +1,3 @@
-
 [build]
   publish = "public"
   command = "npm install"
@@ -6,6 +5,8 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# ⚠️ API ROUTES MUST COME FIRST — before the SPA fallback
 
 [[redirects]]
   from = "/api/clinics"
@@ -24,13 +25,15 @@
   to = "/.netlify/functions/admin-login"
   status = 200
   force = true
-  
+
 [[redirects]]
   from = "/api/track"
   to = "/.netlify/functions/track"
   status = 200
   force = true
-  
+
+# SPA FALLBACK — must be LAST
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
