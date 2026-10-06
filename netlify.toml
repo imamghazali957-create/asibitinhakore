@@ -24,7 +24,13 @@
   to = "/.netlify/functions/admin-login"
   status = 200
   force = true
-
+  
+[[redirects]]
+  from = "/api/track"
+  to = "/.netlify/functions/track"
+  status = 200
+  force = true
+  
 [[redirects]]
   from = "/*"
   to = "/index.html"
